@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
 using Syncfusion.EJ2.Diagrams;
+using SyncFusionWebDiagram.AppCode;
+
 namespace EssentialJS2WebApplicationDiagram.Controllers
 {
     public partial class DiagramController : Controller
@@ -372,11 +374,27 @@ namespace EssentialJS2WebApplicationDiagram.Controllers
             ViewBag.nodes = Nodes;
             ViewBag.connectors = Connectors;
 
+
+            ViewBag.Palette = FlowChartDiagram.getSymbolPalettePalettes();
             ViewBag.Multiple = "Multiple";
             ViewBag.getSymbolNode = "getSymbolNodes";
             ViewBag.getNodeDefaults = "getNodeDefaults";
             ViewBag.getConnectorDefaults = "getConnectorDefaults";
             ViewBag.getSymbolInfo = "getSymbolInfo";
+            return View();
+        }
+
+        public ActionResult NewDiagram()
+        {
+            ViewBag.nodes = new List<DiagramNode>();
+            ViewBag.connectors = new List<DiagramConnector>();
+            ViewBag.Palette = FlowChartDiagram.getSymbolPalettePalettes();
+            ViewBag.Multiple = "Multiple";
+            ViewBag.getSymbolNode = "getSymbolNodes";
+            ViewBag.getNodeDefaults = "getNodeDefaults";
+            ViewBag.getConnectorDefaults = "getConnectorDefaults";
+            ViewBag.getSymbolInfo = "getSymbolInfo";
+
             return View();
         }
     }
