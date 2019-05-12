@@ -6,28 +6,30 @@
 
 }
 
-<div class="card bg-light text-dark" style="margin-top:10px">
+<div id="myheader" class="card bg-light text-dark" style="margin-top: 10px">
     <div class="card-body">
         <h1 class="bd-title">DiagramGrade</h1>
     </div>
 </div>
 <div id="ControlRegion">
-    <div id="palette-space" style="width:240px;height:100%; float:left; margin-top:-5px">
+    <div id="palette-space" style="width: 240px;height: 100%;float: left; margin-top: -5px">
         <ejs-symbolpalette id="symbolPalette" getNodeDefaults="@ViewBag.getSymbolNode" symbolHeight="60" symbolWidth="60" expandMode="@ViewBag.Multiple" width="100%" height="100%" palettes="ViewBag.Palette" symbolMargin="new SymbolPaletteMargin() { Left=15,Right=15,Top=15,Bottom=15}" getSymbolInfo="@ViewBag.getSymbolInfo">
         </ejs-symbolpalette>
     </div>
 
-    <div class="card bg-light text-dark" style="margin-top:10px;">
+    <div class="card bg-light text-dark" style="margin-top: 10px;">
         <div class="card-body">
-            <div id="diagram-space" style="width:100%;height:100%; float:left;">
-                <ejs-diagram id="container" width="100%" height="1300px" mode="SVG"
-                             constraints="PageEditable"
-                             getNodeDefaults="@ViewBag.getNodeDefaults" getConnectorDefaults="@ViewBag.getConnectorDefaults" nodes="ViewBag.nodes" connectors="ViewBag.connectors">
-                    <e-diagram-snapsettings horizontalGridlines="ViewBag.gridLines"
-                                            constraints="None"
-                                            verticalGridlines="ViewBag.gridLines"></e-diagram-snapsettings>
+            <div id="diagram-space" style="width: 100%;height: 100%;float: left;">
+                <ejs-diagram id="container" width="100%" height="1300px" mode="SVG" constraints="PageEditable" getNodeDefaults="@ViewBag.getNodeDefaults" getConnectorDefaults="@ViewBag.getConnectorDefaults" nodes="ViewBag.nodes" connectors="ViewBag.connectors">
+                    <e-diagram-snapsettings horizontalGridlines="ViewBag.gridLines" constraints="None" verticalGridlines="ViewBag.gridLines"></e-diagram-snapsettings>
                 </ejs-diagram>
             </div>
+        </div>
+    </div>
+    @*<button class="btn btn-success" id="ExportPngButton">Download PNG</button>*@
+    <div class="control-section">
+        <div class="content-wrapper" style="width: 100%">
+            <div id="diagram"></div>
         </div>
     </div>
     <style>
@@ -39,6 +41,23 @@
             display: block;
         }
     </style>
+
+    @section Scripts
+        {
+        <script>
+            $(document).ready(function () {
+                $("#ExportPngButton").click(function () {
+                    var exportOptions = {};
+                    exportOptions.format = "PNG";
+                    exportOptions.mode = 'Download';
+                    exportOptions.region = 'PageSettings';
+                    exportOptions.fileName = 'Export';
+                    exportOptions.margin = { left: 0, top: 0, bottom: 0, right: 0 };
+                    diagram.exportDiagram(exportOptions);
+                });
+            });
+        </script>
+    }
     <script>
         function getNodeDefaults(obj, diagram) {
             if (obj.width === undefined) {
@@ -99,5 +118,128 @@
             }
             symbol.style.strokeWidth = 2;
         }
+
+        /**
+        * Print and Export
+        */
+        ej.diagrams.Diagram.Inject(ej.diagrams.PrintAndExport);
+        var checkBoxObj;
+        var toolbarObj;
+        var btnObj;
+        var diagram;
+
+        var shapeFill = '#357bd2';
+        var nodes = [
+            {
+                id: 'sourceNode1', width: 100, height: 50, offsetX: 120, offsetY: 100,
+                style: { strokeColor: '#8f908f', fill: shapeFill, color:'white' },
+                annotations: [{ content: 'Start', margin: { left: 15, right: 15, bottom: 15, top: 15 } }]
+            },
+            {
+                id: 'censusNode2', width: 100, height: 75, offsetX: 120, offsetY: 200,
+                shape: { type: 'Basic', shape: 'Diamond' },
+                style: { strokeColor: '#8f908f', fill: '#e2f3fa' },
+                annotations: [{ content: 'Census Record', margin: { left: 15, right: 15, bottom: 15, top: 15 } }]
+            },
+            {
+                id: 'booksNode3', width: 100, height: 75, offsetX: 120, offsetY: 325,
+                shape: { type: 'Basic', shape: 'Diamond' },
+                style: { strokeColor: '#8f908f', fill: '#e2f3fa' },
+                annotations: [{ content: 'Books and Magazine' }]
+            },
+            {
+                id: 'recordNode4', width: 125, height: 50, offsetX: 320, offsetY: 200,
+                style: { strokeColor: '#868686', fill: '#d5f5d5' },
+                annotations: [{ content: 'Record Template' }]
+            },
+            {
+                id: 'traditionalNode5', width: 125, height: 50, offsetX: 320, offsetY: 325,
+                style: { strokeColor: '#868686', fill: '#d5f5d5' },
+                annotations: [{ content: 'Traditional Template' }]
+            },
+            {
+                id: 'nontraditionalNode6', width: 135, height: 50, offsetX: 120, offsetY: 425,
+                style: { strokeColor: '#a8a8a8', fill: '#faebee' },
+                annotations: [{ content: 'Nontraditional' }]
+            },
+            {
+                id: 'Radial1', width: 125, height: 50, offsetX: 850, offsetY: 225,
+                shape: { type: 'Basic', shape: 'Ellipse' },
+                style: { strokeColor: '#a8a8a8', fill: '#fef0db' },
+                annotations: [{ content: 'Health Fitness', }]
+            },
+            {
+                id: 'Radial2', width: 125, height: 75, offsetX: 850, offsetY: 100,
+                shape: { type: 'Basic', shape: 'Ellipse' },
+                style: { strokeColor: '#a8a8a8', fill: '#faebee' },
+                annotations: [{ content: 'Diet' }]
+            },
+            {
+                id: 'Radial3', width: 125, height: 75, offsetX: 1025, offsetY: 175,
+                shape: { type: 'Basic', shape: 'Ellipse' },
+                style: { strokeColor: '#a8a8a8', fill: '#faebee' },
+                annotations: [{ content: 'Flexibility' }]
+            },
+            {
+                id: 'Radial4', width: 125, height: 75, offsetX: 1000, offsetY: 350,
+                shape: { type: 'Basic', shape: 'Ellipse' },
+                style: { strokeColor: '#a8a8a8', fill: '#faebee' },
+                annotations: [{ content: 'Muscular Endurance' }]
+            },
+            {
+                id: 'Radial5', width: 125, height: 75, offsetX: 675, offsetY: 175,
+                shape: { type: 'Basic', shape: 'Ellipse' },
+                style: { strokeColor: '#a8a8a8', fill: '#faebee' },
+                annotations: [{ content: 'Cardiovascular Strength' }]
+            },
+            {
+                id: 'Radial6', width: 125, height: 75, offsetX: 770, offsetY: 350,
+                shape: { type: 'Basic', shape: 'Ellipse' },
+                style: { strokeColor: '#a8a8a8', fill: '#faebee' },
+                annotations: [{ content: 'Muscular Strength' }]
+            },
+        ];
+        var connectors = [
+            { id: 'flowChartConnector1', sourceID: 'sourceNode1', targetID: 'censusNode2' },
+            {
+                id: 'flowChartConnector2', sourceID: 'censusNode2', targetID: 'booksNode3',
+                annotations: [{ content: 'No', style: { fill: 'White' } }]
+            },
+            {
+                id: 'flowChartConnector3', sourceID: 'booksNode3', targetID: 'nontraditionalNode6',
+                annotations: [{ content: 'No', style: { fill: 'White' } }]
+            },
+            {
+                id: 'flowChartConnector4', sourceID: 'censusNode2', targetID: 'recordNode4',
+                annotations: [{ content: 'Yes', style: { fill: 'White' } }]
+            },
+            {
+                id: 'flowChartConnector5', sourceID: 'booksNode3', targetID: 'traditionalNode5',
+                annotations: [{ content: 'Yes', style: { fill: 'White' } }]
+            },
+            { id: 'RadialConnector1', sourceID: 'Radial1', targetID: 'Radial2', annotations: [{ content: 'Yes', style: { fill: 'White' } }] },
+            { id: 'RadialConnector2', sourceID: 'Radial1', targetID: 'Radial3', annotations: [{ content: 'Yes', style: { fill: 'White' } }] },
+            { id: 'RadialConnector3', sourceID: 'Radial1', targetID: 'Radial4', annotations: [{ content: 'Yes', style: { fill: 'White' } }] },
+            { id: 'RadialConnector4', sourceID: 'Radial1', targetID: 'Radial5', annotations: [{ content: 'Yes', style: { fill: 'White' } }] },
+            { id: 'RadialConnector5', sourceID: 'Radial1', targetID: 'Radial6', annotations: [{ content: 'Yes', style: { fill: 'White' } }] },
+        ];
+
+
+        //nodes = @Html.Raw(ViewBag.nodesJson);
+        //connectors = @Html.Raw(ViewBag.connectorsJson);
+
+        //initialize the diagram control
+        diagram = new ej.diagrams.Diagram({
+            width: '100%', height: '580px', nodes: nodes,
+            connectors: connectors,
+            snapSettings: { constraints: ej.diagrams.SnapConstraints.None },
+            pageSettings: { width: 550, height: 500, multiplePage: true },
+            getConnectorDefaults: function (connector, diagram) {
+                connector.style.strokeColor = '#6d6d6d';
+                return connector;
+            }
+        });
+
+        //diagram.appendTo('#diagram');
     </script>
 </div>

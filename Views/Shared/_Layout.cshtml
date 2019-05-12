@@ -21,7 +21,7 @@
 <script src="~/js/ej2/ej2.min.js"></script>
 
 </head>
-<body>
+<body id="MyBody">
     <div class="container body-content">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
             <a class="navbar-brand" href="#">SyncFusion</a>
@@ -31,16 +31,11 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item" asp-if-controller-is="Diagram" asp-if-action-is="DiagramGrade" asp-when-true="active">
                         <a class="nav-link" asp-controller="Diagram" asp-action="DiagramGrade">Flow Chart<span class="sr-only">(current)</span></a>
-                        <!-- <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> -->
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Diagram" asp-action="NewDiagram">AA</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Home" asp-action="Contact">BB</a>
-
+                    <li class="nav-item" asp-if-controller-is="Diagram" asp-if-action-is="NewDiagram" asp-when-true="active">
+                        <a class="nav-link" asp-controller="Diagram" asp-action="NewDiagram">New</a>
                     </li>
                 </ul>
             </div>
@@ -58,6 +53,7 @@
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">

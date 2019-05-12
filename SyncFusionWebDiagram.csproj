@@ -4,6 +4,7 @@
     <TypeScriptLib>dom,es2015</TypeScriptLib>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="jQuery" Version="3.4.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
     <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="17.1.0.38" />
     <PackageReference Include="Microsoft.AspNetCore.App" />

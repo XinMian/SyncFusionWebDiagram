@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
 using Syncfusion.EJ2.Diagrams;
 using SyncFusionWebDiagram.AppCode;
+using Newtonsoft.Json;
 
 namespace EssentialJS2WebApplicationDiagram.Controllers
 {
@@ -16,7 +17,7 @@ namespace EssentialJS2WebApplicationDiagram.Controllers
         {
             List<DiagramNode> Nodes = new List<DiagramNode>();
             List<DiagramNodeAnnotation> Node1 = new List<DiagramNodeAnnotation>();
-            Node1.Add(new DiagramNodeAnnotation() { Content = "Place Order", Style = new DiagramTextStyle() { Color = "white", Fill = "transparent" } });
+            Node1.Add(new DiagramNodeAnnotation() { Content = "Place Order", Style = new DiagramTextStyle() { Color = "Black", Fill = "transparent" } });
             List<DiagramNodeAnnotation> Node2 = new List<DiagramNodeAnnotation>();
             Node2.Add(new DiagramNodeAnnotation() { Content = "Start Transaction", Style = new DiagramTextStyle() { Color = "white", Fill = "transparent" } });
             List<DiagramNodeAnnotation> Node3 = new List<DiagramNodeAnnotation>();
@@ -318,7 +319,7 @@ namespace EssentialJS2WebApplicationDiagram.Controllers
             NodeOutput.Add(new DiagramNodeAnnotation() { Content = "Grade", Style = new DiagramTextStyle() { Color = "white", Fill = "transparent" } });
             NodeEnd.Add(new DiagramNodeAnnotation() { Content = "End", Style = new DiagramTextStyle() { Color = "white", Fill = "transparent" } });
 
-            Nodes.Add(new DefaultNode() { Id = "Start", OffsetX = 340, OffsetY = 100, Height = 60, Annotations = NodeStart, Shape = new { type = "Flow", shape = "Terminator" } });
+            Nodes.Add(new DefaultNode() { Id = "Start", OffsetX = 340, OffsetY = 100, Height = 60, Annotations = NodeStart, Shape = new { type = "Flow", shape = "Terminator" }, Style = new DiagramStrokeStyle() { Fill = "Red"} });
             Nodes.Add(new DefaultNode() { Id = "Input", OffsetX = 340, OffsetY = 200, Height = 60, Annotations = NodeInput, Shape = new { type = "Flow", shape = "Data" } });
             Nodes.Add(new DefaultNode() { Id = "Decision80", OffsetX = 340, OffsetY = 300, Height = 60, Annotations = NodeDecision80, Shape = new { type = "Flow", shape = "Decision" } });
             Nodes.Add(new DefaultNode() { Id = "Decision75", OffsetX = 340, OffsetY = 400, Height = 60, Annotations = NodeDecision75, Shape = new { type = "Flow", shape = "Decision" } });
@@ -371,6 +372,17 @@ namespace EssentialJS2WebApplicationDiagram.Controllers
             Connectors.Add(new DiagramConnector() { Id = "connector25", SourceID = "D", TargetID = "Circle" });
             Connectors.Add(new DiagramConnector() { Id = "connector26", SourceID = "Circle", TargetID = "Output" });
             Connectors.Add(new DiagramConnector() { Id = "connector27", SourceID = "Output", TargetID = "End" });
+
+            ViewBag.nodesJson = JsonConvert.SerializeObject(Nodes,Newtonsoft.Json.Formatting.None,
+                        new JsonSerializerSettings
+                        {
+                            NullValueHandling = NullValueHandling.Ignore
+                        });
+            ViewBag.connectorsJson = JsonConvert.SerializeObject(Connectors, Newtonsoft.Json.Formatting.None,
+                        new JsonSerializerSettings
+                        {
+                            NullValueHandling = NullValueHandling.Ignore
+                        });
             ViewBag.nodes = Nodes;
             ViewBag.connectors = Connectors;
 
